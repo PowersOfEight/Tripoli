@@ -708,13 +708,14 @@ public class Analysis implements Serializable, AnalysisInterface {
         this.analysisMethod = analysisMethod;
         // TODO: initialize mapOfSpeciesToColors based on defaults
         // TODO: remove boilerplate initialization method
-//        if (analysisMethod != null) {
-//            initializeDefaultsMapOfSpeciesToColors(analysisMethod.getSpeciesList().size());
-//        }
+        if (analysisMethod != null && analysisMethod.getSpeciesList() != null) {
+            initializeDefaultsMapOfSpeciesToColors(analysisMethod.getSpeciesList());
+        }
     }
 
     // TODO: remove boilerplate initialization method
-    private void initializeDefaultsMapOfSpeciesToColors(int numSpecies) {
+    private void initializeDefaultsMapOfSpeciesToColors(List<SpeciesRecordInterface> listOfSpeciesRecords) {
+        int numSpecies = listOfSpeciesRecords.size();
         for(int i = 0; i < numSpecies; i++) {
             analysisMapOfSpeciesToColors.put(i,
                     new SpeciesColors(

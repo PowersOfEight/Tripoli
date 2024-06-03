@@ -11,10 +11,14 @@ import java.util.*;
 public class TripoliSpeciesColorMap implements Map<Integer, SpeciesColors>, Serializable{
 
     private final Map<Integer, SpeciesColors> mapOfSpeciesToColors;
-
+    private final Map<SpeciesRecordInterface, Integer> mapOfRecordsToEntries;
+    private boolean speciesRecordsInitialized;
+//    private final Map<SpeciesRecordInterface, Integer> mapOfSpeciesToIntegers;
     public TripoliSpeciesColorMap() {
         super();
         mapOfSpeciesToColors = Collections.synchronizedSortedMap(new TreeMap<>());
+        mapOfRecordsToEntries = Collections.synchronizedSortedMap(new TreeMap<>());
+        this.speciesRecordsInitialized = false;
     }
 
     public TripoliSpeciesColorMap(Map<Integer, SpeciesColors> other) {
@@ -24,6 +28,8 @@ public class TripoliSpeciesColorMap implements Map<Integer, SpeciesColors>, Seri
             this.mapOfSpeciesToColors.put(newKey, other.get(key).copy());
         }
     }
+
+
 
     @Override
     public int size() {
