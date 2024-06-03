@@ -11,13 +11,13 @@ import java.util.*;
 public class TripoliSpeciesColorMap implements Map<Integer, SpeciesColors>, Serializable{
 
     private final Map<Integer, SpeciesColors> mapOfSpeciesToColors;
-    private final Map<SpeciesRecordInterface, Integer> mapOfRecordsToEntries;
+    private final Map<SpeciesRecordInterface, Integer> speciesRecordInterfaceIntegerMap;
     private boolean speciesRecordsInitialized;
 //    private final Map<SpeciesRecordInterface, Integer> mapOfSpeciesToIntegers;
     public TripoliSpeciesColorMap() {
         super();
         mapOfSpeciesToColors = Collections.synchronizedSortedMap(new TreeMap<>());
-        mapOfRecordsToEntries = Collections.synchronizedSortedMap(new TreeMap<>());
+        speciesRecordInterfaceIntegerMap = Collections.synchronizedSortedMap(new TreeMap<>());
         this.speciesRecordsInitialized = false;
     }
 
@@ -29,7 +29,15 @@ public class TripoliSpeciesColorMap implements Map<Integer, SpeciesColors>, Seri
         }
     }
 
-
+    public void initializeSpeciesRecordInterfaceMap(List<SpeciesRecordInterface> speciesRecordInterfaceList) {
+        if(!speciesRecordsInitialized) {
+            for (int i = 0; i < speciesRecordInterfaceList.size(); ++i) {
+                SpeciesRecordInterface currentSpeciesRecord = speciesRecordInterfaceList.get(i);
+                this.speciesRecordInterfaceIntegerMap.put(currentSpeciesRecord, i);
+            }
+            speciesRecordsInitialized = true;
+        }
+    }
 
     @Override
     public int size() {
@@ -46,23 +54,39 @@ public class TripoliSpeciesColorMap implements Map<Integer, SpeciesColors>, Seri
         return mapOfSpeciesToColors.containsKey(key);
     }
 
+    public boolean containsKey(SpeciesRecordInterface key) {
+        return speciesRecordInterfaceIntegerMap.containsKey(key);
+    }
+
     @Override
     public boolean containsValue(Object value) {
         return mapOfSpeciesToColors.containsValue(value);
     }
 
+    public SpeciesColors get(SpeciesRecordInterface key) {
+        SpeciesColors speciesColors = null;
+        if(speciesRecordInterfaceIntegerMap.containsKey(key)) {
+            speciesColors = mapOfSpeciesToColors.get(speciesRecordInterfaceIntegerMap.get(key));
+        }
+        return speciesColors;
+    }
+
+    public boolean isSpeciesRecordsInitialized() {
+        return speciesRecordsInitialized;
+    }
+
     @Override
     public SpeciesColors get(Object key) {
         SpeciesColors speciesColors = null;
-        if (containsKey(key)) {
-            speciesColors = mapOfSpeciesToColors.get(key);
-        } else {
-            if (size() > 0  && (Integer) key >= size()) {
-                int idx = (Integer) key % size();
-                speciesColors = mapOfSpeciesToColors.get(idx);
-                putReorganize((Integer) key, speciesColors);
+            if (containsKey(key)) {
+                speciesColors = mapOfSpeciesToColors.get(key);
+            } else {
+                if (size() > 0  && (Integer) key >= size()) {
+                    int idx = (Integer) key % size();
+                    speciesColors = mapOfSpeciesToColors.get(idx);
+                    putReorganize((Integer) key, speciesColors);
+                }
             }
-        }
         return speciesColors;
     }
 

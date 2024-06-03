@@ -46,7 +46,7 @@ public class SpeciesColorPane extends Pane implements Highlightable {
         root.getChildren().add(title);
         root.getChildren().addAll(mapOfPlotFlavorsToSpeciesColorRows.values());
         for(Node node : root.getChildren()) {
-            node.setStyle(node.getStyle() + ";;-fx-border-color: black; -fx-border-width: .5px .75px .5px .25px;");
+            node.setStyle(node.getStyle() + ";;-fx-border-color: black; -fx-border-width: .5px .25px .5px .25px;");
 
         }
 //        title.setStyle(title.getStyle() + ";;-fx-border-color: black; -fx-border-width: .5px 15.75px .5px .25px;");

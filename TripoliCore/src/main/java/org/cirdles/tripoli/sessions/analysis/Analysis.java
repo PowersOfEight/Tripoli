@@ -706,25 +706,23 @@ public class Analysis implements Serializable, AnalysisInterface {
     public void setMethod(AnalysisMethod analysisMethod) {
         // Will use this method to initialize mapOfSpeciesToColors
         this.analysisMethod = analysisMethod;
-        // TODO: initialize mapOfSpeciesToColors based on defaults
-        // TODO: remove boilerplate initialization method
         if (analysisMethod != null && analysisMethod.getSpeciesList() != null) {
             initializeDefaultsMapOfSpeciesToColors(analysisMethod.getSpeciesList());
         }
     }
 
-    // TODO: remove boilerplate initialization method
     private void initializeDefaultsMapOfSpeciesToColors(List<SpeciesRecordInterface> listOfSpeciesRecords) {
-        int numSpecies = listOfSpeciesRecords.size();
-        for(int i = 0; i < numSpecies; i++) {
-            analysisMapOfSpeciesToColors.put(i,
-                    new SpeciesColors(
-                            TRIPOLI_DEFAULT_HEX_COLORS.get(i * 4),
-                            TRIPOLI_DEFAULT_HEX_COLORS.get(i * 4 + 1),
-                            TRIPOLI_DEFAULT_HEX_COLORS.get(i * 4 + 2),
-                            TRIPOLI_DEFAULT_HEX_COLORS.get(i * 4 + 3)
-                    ));
-        }
+        this.analysisMapOfSpeciesToColors.initializeSpeciesRecordInterfaceMap(listOfSpeciesRecords);
+//        int numSpecies = listOfSpeciesRecords.size();
+//        for(int i = 0; i < numSpecies; i++) {
+//            analysisMapOfSpeciesToColors.put(i,
+//                    new SpeciesColors(
+//                            TRIPOLI_DEFAULT_HEX_COLORS.get(i * 4),
+//                            TRIPOLI_DEFAULT_HEX_COLORS.get(i * 4 + 1),
+//                            TRIPOLI_DEFAULT_HEX_COLORS.get(i * 4 + 2),
+//                            TRIPOLI_DEFAULT_HEX_COLORS.get(i * 4 + 3)
+//                    ));
+//        }
     }
 
     // TODO: use this to set defaults from `ColorSelectionWindow`
