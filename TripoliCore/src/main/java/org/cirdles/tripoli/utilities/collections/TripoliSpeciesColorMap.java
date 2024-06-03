@@ -51,7 +51,13 @@ public class TripoliSpeciesColorMap implements Map<Integer, SpeciesColors>, Seri
 
     @Override
     public boolean containsKey(Object key) {
-        return mapOfSpeciesToColors.containsKey(key);
+        if (key instanceof SpeciesRecordInterface) {
+            return speciesRecordInterfaceIntegerMap.containsKey(key);
+        } else if (key instanceof Integer) {
+            return mapOfSpeciesToColors.containsKey(key);
+        } else {
+            return false;
+        }
     }
 
     public boolean containsKey(SpeciesRecordInterface key) {
